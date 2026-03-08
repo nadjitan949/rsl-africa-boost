@@ -1,8 +1,6 @@
 const express = require('express');
 const sequelize = require('./configs/db.connection');
-const User = require('./models/tables/user.model');
-const Country = require('./models/tables/country.model');
-const Hotel = require('./models/tables/hotel.model');
+const { User, Country, Hotel } = require('./models/relations/realtions.model')
 const Galery = require('./models/tables/galery.model');
 require('dotenv').config();
 const app = express();
