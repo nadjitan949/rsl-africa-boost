@@ -1,6 +1,7 @@
 const express = require('express');
 const sequelize = require('./configs/db.connection');
 const User = require('./models/tables/user.model');
+const Country = require('./models/tables/country.model');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
