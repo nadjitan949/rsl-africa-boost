@@ -3,6 +3,8 @@ const User = require("../../models/tables/user.model")
 const bcrypt = require("bcrypt")
 const { generateSecurePassword } = require("../../secure/password.generator")
 const { generateAccessToken, generateRefreshToken } = require("../../token/token.generator")
+const Country = require("../../models/tables/country.model")
+const Hotel = require("../../models/tables/hotel.model")
 
 async function signUpService(req, res) {
 
@@ -31,7 +33,7 @@ async function signUpService(req, res) {
         const newUser = await User.create({...req.body, password: hashedPassword})
         return res.status(responses.HTTP_CODE.CREATED).json({
             success: true,
-            message: "Votre compte a été crée avec success",
+            message: "Votre compte a été crée avec success. Votre mot de passe vous est envoyé par email",
             newUser,
             password
         })
@@ -96,7 +98,12 @@ async function validateService(req, res) {
     try {
 
         const id = req.user.id
-        const user = await User.findByPk(id)
+        const user = await User.findByPk(id, {
+            include: {
+                model: Country,
+                model: Hotel
+            }
+        })
 
         if(!user) {
             return res.status(responses.HTTP_CODE.NOT_FOUND).json({
