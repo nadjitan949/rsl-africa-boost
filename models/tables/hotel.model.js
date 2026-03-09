@@ -10,7 +10,13 @@ const Hotel = sequelize.define('Hotel',
     },
     {
         tableName: "hotels",
-        timestamps: true
+        timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ['name']
+            }
+        ]
     }
 )
 

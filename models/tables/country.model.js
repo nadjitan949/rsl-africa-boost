@@ -9,7 +9,13 @@ const Country = sequelize.define("Country",
     },
     {
         tableName: "countries",
-        timestamps: true
+        timestamps: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ['name']
+            }
+        ]
     }
 )
 

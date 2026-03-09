@@ -9,7 +9,7 @@ const Galery = sequelize.define("Galery",
     },
     {
         tableName: "galeries",
-        timestamps: true
+        timestamps: true,
     }
 )
 
