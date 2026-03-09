@@ -1,17 +1,16 @@
-const responses = require("../../messages/responses");
+const responses = require("../../messages/responses")
 const {
-    getAllCountryService,
-    getOneCountryService,
-    updateCountryService,
-    addCountryService,
-    deleteCountryService
-} = require("./country.service");
+    getAllHotelsService,
+    getOneHotelService,
+    addHotelService,
+    updateHotelService,
+    deleteHotelService
+} = require("./hotel.service")
 
-async function getAllCountryController(req, res) {
-
+async function getAllHotelsController(req, res) {
     try {
 
-        await getAllCountryService(req, res)
+        await getAllHotelsService(req, res)
 
     } catch (error) {
         console.log("Erreur: ", error)
@@ -21,15 +20,13 @@ async function getAllCountryController(req, res) {
             error
         })
     }
-
 }
 
-async function getOneCountryController(req, res) {
-
+async function getOneHotelController(req, res) {
     try {
 
-        await getOneCountryService(req, res)
-
+        await getOneHotelService(req, res)
+        
     } catch (error) {
         console.log("Erreur: ", error)
         return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
@@ -38,14 +35,13 @@ async function getOneCountryController(req, res) {
             error
         })
     }
-
 }
 
-async function addCountryController(req, res) {
+async function addHotelController(req, res) {
 
     try {
 
-        await addCountryService(req, res)
+        await addHotelService(req, res)
         
     } catch (error) {
         console.log("Erreur: ", error)
@@ -58,29 +54,29 @@ async function addCountryController(req, res) {
     
 }
 
-async function updateCountryController(req, res) {
+async function updateHotelController(req, res) {
 
     try {
 
-        await updateCountryService(req, res)
-
+        await updateHotelService(req, res)
+        
     } catch (error) {
-        console.log("Erreur: ", error)
+       console.log("Erreur: ", error)
         return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
             success: false,
             message: "Erreur interne survenus",
             error
-        })
+        }) 
     }
-
+    
 }
 
-async function deleteCountryController(req, res) {
+async function deleteHotelController(req, res) {
 
     try {
 
-        await deleteCountryService(req, res)
-
+        await deleteHotelService(req, res)
+        
     } catch (error) {
         console.log("Erreur: ", error)
         return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
@@ -89,13 +85,13 @@ async function deleteCountryController(req, res) {
             error
         })
     }
-
+    
 }
 
 module.exports = {
-    getAllCountryController,
-    getOneCountryController,
-    addCountryController,
-    updateCountryController,
-    deleteCountryController
+    getAllHotelsController,
+    getOneHotelController,
+    addHotelController,
+    updateHotelController,
+    deleteHotelController
 }
