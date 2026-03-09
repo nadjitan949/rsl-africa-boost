@@ -91,4 +91,35 @@ async function signInService(req, res) {
     
 }
 
-module.exports = {signUpService, signInService}
+async function validateService(req, res) {
+
+    try {
+
+        const id = req.user.id
+        const user = await User.findByPk(id)
+
+        if(!user) {
+            return res.status(responses.HTTP_CODE.NOT_FOUND).json({
+                success: false,
+                message: "Votre compte est invalide"
+            })
+        }
+
+        return res.status(responses.HTTP_CODE.ACCEPTED).json({
+            success: true,
+            message: "Vos informations",
+            user
+        })
+        
+    } catch (error) {
+        console.log("Erreur: ", error)
+        return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            message: "Erreur interne survenus",
+            error
+        })
+    }
+    
+}
+
+module.exports = {signUpService, signInService, validateService}
