@@ -2,13 +2,14 @@ const express = require('express');
 const sequelize = require('./configs/db.connection');
 const { User, Country, Hotel } = require('./models/relations/realtions.model')
 const Galery = require('./models/tables/galery.model');
+const appRoute = require('./app.route');
 require('dotenv').config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-});
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
+app.use(appRoute)
 
 async function startServer() {
   try {
