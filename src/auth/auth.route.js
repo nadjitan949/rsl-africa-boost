@@ -1,6 +1,6 @@
 const express = require("express")
 const {signUpController, signInController, validateController} = require("./auth.controller")
-const authMiddleware = require("../../middleware/authMiddleware")
+const authMiddleware = require("../../middleware/auth.middleware")
 
 const authRoute = express.Router()
 
