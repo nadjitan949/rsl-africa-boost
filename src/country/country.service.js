@@ -8,10 +8,16 @@ async function getAllCountryService(req, res) {
     try {
 
         const countries = await Country.findAll({
-            include: {
-                model: User,
-                model: Hotel
-            }
+            include: [
+                {
+                    model: User,
+                    as: "delegation"
+                },
+                {
+                    model: Hotel,
+                    as: "hotels"
+                }
+            ]
         })
 
         if (countries.length === 0) {
@@ -44,7 +50,20 @@ async function getOneCountryService(req, res) {
     try {
 
         const id = req.params.id
-        const country = await Country.findByPk(id)
+        const country = await Country.findByPk(id,
+            {
+                include: [
+                    {
+                        model: User,
+                        as: "delegation"
+                    },
+                    {
+                        model: Hotel,
+                        as: "hotels"
+                    }
+                ]
+            }
+        )
 
         if (!country) {
             return res.status(responses.HTTP_CODE.NOT_FOUND).json({
@@ -74,6 +93,7 @@ async function addCountryService(req, res) {
 
     try {
 
+        const imagePath = req.file.path
         const { name } = req.body
         const existCountry = await Country.findOne({ where: { name } })
 
@@ -85,7 +105,10 @@ async function addCountryService(req, res) {
             })
         }
 
-        const newCountry = await Country.create(req.body)
+        const newCountry = await Country.create({
+            ...req.body,
+            flag: imagePath
+        })
 
         return res.status(responses.HTTP_CODE.CREATED).json({
             success: true,
@@ -118,7 +141,15 @@ async function updateCountryService(req, res) {
             })
         }
 
-        await country.update(req.body)
+        const updateData = {
+            ...req.body
+        }
+
+        if (req.file) {
+            updateData.flag = req.file.path
+        }
+
+        await country.update(updateData)
 
         return res.status(responses.HTTP_CODE.OK).json({
             success: true,
