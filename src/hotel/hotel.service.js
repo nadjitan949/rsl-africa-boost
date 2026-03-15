@@ -8,10 +8,16 @@ async function getAllHotelsService(req, res) {
     try {
 
         const hotels = await Hotel.findAll({
-            include: {
-                model: Country,
-                model: User
-            }
+            include: [
+                {
+                    model: Country,
+                    as: "country"
+                },
+                {
+                    model: User,
+                    as: "users"
+                },
+            ]
         })
 
         if (hotels.length === 0) {
@@ -45,10 +51,16 @@ async function getOneHotelService(req, res) {
 
         const id = req.params.id
         const hotel = await Hotel.findByPk(id, {
-            include: {
-                model: Country,
-                model: User
-            }
+            include: [
+                {
+                    model: Country,
+                    as: "country"
+                },
+                {
+                    model: User,
+                    as: "users"
+                },
+            ]
         })
 
         if (!hotel) {
@@ -105,7 +117,7 @@ async function updateHotelService(req, res) {
         const id = req.params.id
         const hotel = await Hotel.findByPk(id)
 
-        if(!hotel) {
+        if (!hotel) {
             return res.status(responses.HTTP_CODE.OK).json({
                 success: false,
                 message: "Hotel introuvable"
@@ -119,7 +131,7 @@ async function updateHotelService(req, res) {
             message: "Hotel mis à jour avec succes",
             hotel
         })
-        
+
     } catch (error) {
         console.log("Erreur: ", error)
         return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
@@ -128,7 +140,7 @@ async function updateHotelService(req, res) {
             error
         })
     }
-    
+
 }
 
 async function deleteHotelService(req, res) {
@@ -138,7 +150,7 @@ async function deleteHotelService(req, res) {
         const id = req.params.id
         const hotel = await Hotel.findByPk(id)
 
-        if(!hotel) {
+        if (!hotel) {
             return res.status(responses.HTTP_CODE.NOT_FOUND).json({
                 success: false,
                 message: "Hotel introuvable"
@@ -151,7 +163,7 @@ async function deleteHotelService(req, res) {
             success: true,
             message: "Hotel supprimé avec succes"
         })
-        
+
     } catch (error) {
         console.log("Erreur: ", error)
         return res.status(responses.HTTP_CODE.INTERNAL_SERVER_ERROR).json({
@@ -160,7 +172,7 @@ async function deleteHotelService(req, res) {
             error
         })
     }
-    
+
 }
 
 module.exports = {
